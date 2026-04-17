@@ -1,6 +1,6 @@
 # Cloudflare Email MCP & API Wrapper 📧
 
-[![Visitors](https://visitorbadge.io/api/visitors?path=SH20RAJ%2Fcloudflare-email-mcp-api-wrapper&label=visitors&labelColor=%23263759&countColor=%230a7f5a)](https://visitorbadge.io/status?path=SH20RAJ%2Fcloudflare-email-mcp-api-wrapper)
+[![Visitors](https://api.visitorbadge.io/api/combined?path=https%3A%2F%2Fgithub.com%2FSH20RAJ%2Fcloudflare-email-mcp-api-wrapper&label=V&countColor=%23263759&style=plastic)](https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2FSH20RAJ%2Fcloudflare-email-mcp-api-wrapper)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
 [![MCP Endpoint](https://img.shields.io/badge/MCP-JSON--RPC-0B4F75)](docs/MCP.md)
 [![Wrangler](https://img.shields.io/badge/Wrangler-v4-orange)](https://developers.cloudflare.com/workers/wrangler/)
@@ -24,7 +24,7 @@ An open-source, production-ready Cloudflare Worker that exposes a JSON API and a
 
 ### 2. Installation
 ```bash
-git clone https://github.com/yourusername/cf-email-mcp-api.git
+git clone https://github.com/sh20raj/cf-email-mcp-api.git
 cd cf-email-mcp-api
 bun install
 ```
