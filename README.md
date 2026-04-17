@@ -12,6 +12,8 @@ Deploy once on Cloudflare Workers, then send emails through:
 
 This project wraps Cloudflare's Email Workers send capability so app developers and AI agents can send emails without rebuilding SMTP or provider integrations in every app.
 
+You do not need to publish this repository as an npm package to use it. The normal flow is to deploy the Worker to Cloudflare and call the deployed `/send` and `/mcp` endpoints.
+
 ## Why this project
 
 Cloudflare's Email Workers send capability is powerful, but teams often need a reusable wrapper with:
@@ -74,6 +76,8 @@ References:
 - Email Routing enabled for your domain
 - At least one verified destination address
 - Wrangler installed/authenticated
+
+If you need the Cloudflare token and account ID for legacy scripts or other API work, see [docs/SETUP.md](docs/SETUP.md).
 
 ### 2) Install
 
@@ -195,6 +199,7 @@ See [docs/AI_AGENTS.md](docs/AI_AGENTS.md) for examples across different agent s
 
 ## Open-source docs
 
+- [docs/SETUP.md](docs/SETUP.md)
 - [docs/API.md](docs/API.md)
 - [docs/MCP.md](docs/MCP.md)
 - [docs/AI_AGENTS.md](docs/AI_AGENTS.md)
