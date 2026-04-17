@@ -1,56 +1,81 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
-const ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID || '091539408595ba99a0ef106d42391d5b';
-const API_TOKEN = process.env.CLOUDFLARE_API_TOKEN;
-const SENDER = process.env.SENDER_EMAIL || 'test@mail.wify.my';
-const RECIPIENT = process.env.RECIPIENT_EMAIL || 'shaswatraj3@gmail.com';
+const WORKER_URL = (process.env.WORKER_URL || '').replace(/\/$/, '');
+const API_TOKEN = process.env.WORKER_API_TOKEN || '';
+const TO = process.env.TEST_TO || 'recipient@example.com';
+const FROM = process.env.TEST_FROM || 'noreply@example.com';
+const SUBJECT = process.env.TEST_SUBJECT || 'Test Email from CF Email MCP API';
 
-async function sendTestEmail() {
-  if (!API_TOKEN) {
-    console.error('❌ Error: CLOUDFLARE_API_TOKEN is not set in .env');
+const authHeaders = API_TOKEN
+  ? {
+      Authorization: `Bearer ${API_TOKEN}`,
+      'X-API-Key': API_TOKEN,
+    }
+  : {};
+
+async function testSendEndpoint() {
+  if (!WORKER_URL) {
+    console.error('❌ Error: WORKER_URL is required in .env');
     process.exit(1);
   }
 
-  const url = `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/email/sending/send`;
-
   const body = {
-    to: RECIPIENT,
-    from: SENDER,
-    subject: 'Mail.wify.my Test Email',
-    html: `
-      <h1>Hello from mail.wify.my!</h1>
-      <p>This is a test email sent via the Cloudflare Email Service REST API.</p>
-      <hr>
-      <p><small>Sent at: ${new Date().toISOString()}</small></p>
-    `,
-    text: `Hello from mail.wify.my! This is a test email sent via the Cloudflare Email Service REST API. Sent at: ${new Date().toISOString()}`
+    to: [TO],
+    from: FROM,
+    subject: SUBJECT,
+    html: `<h1>CF Email MCP + API</h1><p>Sent at ${new Date().toISOString()}</p>`,
+    text: `CF Email MCP + API test. Sent at ${new Date().toISOString()}`,
   };
 
   try {
-    console.log(`Sending email from ${SENDER} to ${RECIPIENT}...`);
+    const url = `${WORKER_URL}/send`;
+    console.log(`Testing POST ${url}`);
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${API_TOKEN}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...authHeaders,
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
 
     const data = await response.json();
-
-    if (response.ok) {
-      console.log('✅ Success! Email sent.');
-      console.log(JSON.stringify(data, null, 2));
-    } else {
-      console.error('❌ Failed to send email.');
-      console.error(`Status: ${response.status}`);
-      console.error(JSON.stringify(data, null, 2));
-    }
+    console.log(`Status: ${response.status}`);
+    console.log(JSON.stringify(data, null, 2));
   } catch (error) {
-    console.error('❌ Network error:', error.message);
+    console.error('❌ /send test failed:', error.message);
   }
 }
 
-sendTestEmail();
+async function testMcpToolsList() {
+  try {
+    const url = `${WORKER_URL}/mcp`;
+    console.log(`Testing POST ${url} (tools/list)`);
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...authHeaders,
+      },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 'tools-list',
+        method: 'tools/list',
+      }),
+    });
+
+    const data = await response.json();
+    console.log(`Status: ${response.status}`);
+    console.log(JSON.stringify(data, null, 2));
+  } catch (error) {
+    console.error('❌ /mcp tools/list test failed:', error.message);
+  }
+}
+
+async function run() {
+  await testSendEndpoint();
+  await testMcpToolsList();
+}
+
+run();
