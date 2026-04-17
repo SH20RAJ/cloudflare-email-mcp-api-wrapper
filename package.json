@@ -1,0 +1,18 @@
+{
+  "name": "cloudflare-email-test",
+  "version": "1.0.0",
+  "description": "Test Cloudflare Email Sending service",
+  "main": "test-api.js",
+  "scripts": {
+    "test:api": "node test-api.js",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "mimetext": "^3.0.24"
+  },
+  "devDependencies": {
+    "wrangler": "^3.51.0"
+  }
+}

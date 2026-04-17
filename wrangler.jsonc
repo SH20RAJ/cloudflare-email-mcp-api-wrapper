@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "email-test-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-04-01",
+  "send_email": [
+    {
+      "name": "EMAIL_SERVICE"
+    }
+  ]
+}
