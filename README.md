@@ -197,6 +197,141 @@ See full MCP setup docs in [docs/MCP.md](docs/MCP.md), including AI-agent connec
 
 See [docs/AI_AGENTS.md](docs/AI_AGENTS.md) for examples across different agent setups.
 
+### Ready-to-copy provider configs
+
+All of these examples point to the same remote MCP endpoint:
+
+- `https://<your worker>.workers.dev/mcp`
+
+Use an environment variable or secret store for the token instead of hardcoding it.
+
+#### Claude Code
+
+Claude Code supports remote HTTP MCP servers directly:
+
+```bash
+claude mcp add --transport http cf-email https://<your worker>.shraj.workers.dev/mcp \
+  --header "Authorization: Bearer $CF_EMAIL_API_TOKEN"
+```
+
+If you prefer JSON config, add this to `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "cf-email": {
+      "type": "http",
+      "url": "https://<your worker>.shraj.workers.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer ${CF_EMAIL_API_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+#### GitHub Copilot / VS Code
+
+Create `.vscode/mcp.json` in your workspace, or open the user MCP configuration and add:
+
+```json
+{
+  "servers": {
+    "cf-email": {
+      "type": "http",
+      "url": "https://<your worker>.shraj.workers.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer ${CF_EMAIL_API_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+If your build still uses `transport` instead of `type`, keep the same URL and headers and swap that field to match your client version.
+
+#### Cline
+
+Cline can add a remote HTTP MCP server from the command line:
+
+```bash
+cline mcp add cf-email https://<your worker>.shraj.workers.dev/mcp --type http
+```
+
+Or configure it directly:
+
+```json
+{
+  "mcpServers": {
+    "cf-email": {
+      "type": "streamableHttp",
+      "url": "https://<your worker>.shraj.workers.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer ${CF_EMAIL_API_TOKEN}"
+      },
+      "disabled": false
+    }
+  }
+}
+```
+
+#### Kilo Code
+
+Kilo Code stores MCP settings in `kilo.jsonc` or the MCP settings UI:
+
+```json
+{
+  "mcp": {
+    "cf-email": {
+      "type": "remote",
+      "url": "https://<your worker>.shraj.workers.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer ${CF_EMAIL_API_TOKEN}"
+      },
+      "enabled": true
+    }
+  }
+}
+```
+
+#### Google Antigravity
+
+Open the MCP Store, then choose Manage MCP Servers and View raw config. The exact schema can vary by release, but the remote connection values are the same:
+
+```json
+{
+  "mcpServers": {
+    "cf-email": {
+      "type": "http",
+      "url": "https://<your worker>.shraj.workers.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer ${CF_EMAIL_API_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+#### Any other MCP client
+
+If your client supports remote HTTP MCP servers, use the same URL and bearer token pattern:
+
+```json
+{
+  "mcpServers": {
+    "cf-email": {
+      "type": "http",
+      "url": "https://<your worker>.shraj.workers.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer ${CF_EMAIL_API_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+If your client only supports local stdio servers, use a bridge that forwards requests to the remote `/mcp` endpoint.
+
 ## Open-source docs
 
 - [docs/SETUP.md](docs/SETUP.md)
