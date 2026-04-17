@@ -1,40 +1,19 @@
-# Contributing
+# Contributing to Cloudflare Email MCP & API Wrapper
 
-Thanks for considering a contribution.
+Thank you for your interest in contributing! We welcome all types of contributions, from bug fixes to new features.
 
-## Development workflow
+## How to Contribute
 
-1. Fork the repository.
-2. Create a feature branch.
-3. Run local checks and tests.
-4. Submit a pull request with a clear description.
+1. **Fork the Repository**: Create your own version of the project.
+2. **Create a Branch**: `git checkout -b feature/your-feature-name`
+3. **Make Changes**: Implement your feature or fix.
+4. **Test Your Changes**: Ensure everything still works by running `bun run dev`.
+5. **Submit a Pull Request**: Provide a clear description of your changes and why they are needed.
 
-## Local setup
+## Style Guide
+- Use TypeScript for all logic.
+- Follow the existing project structure.
+- Add documentation for any new features in `README.md`.
 
-```bash
-npm install
-npm run dev
-```
-
-## Coding standards
-
-- Keep changes focused and minimal.
-- Preserve route compatibility unless change is intentional.
-- Update docs for endpoint or payload changes.
-
-## Pull request checklist
-
-- [ ] Code builds and runs locally
-- [ ] Docs updated for behavioral changes
-- [ ] Security impact considered
-- [ ] Backward compatibility reviewed
-
-## Reporting bugs
-
-Open an issue with:
-
-- Steps to reproduce
-- Expected behavior
-- Actual behavior
-- Worker logs/errors
-- Sample request payload (without secrets)
+## License
+By contributing, you agree that your contributions will be licensed under the MIT License.

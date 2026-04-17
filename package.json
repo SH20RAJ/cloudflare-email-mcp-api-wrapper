@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "dotenv": "^16.4.5",
-    "mimetext": "^3.0.24"
+    "hono": "^4.2.4",
+    "mimetext": "^3.0.24",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "wrangler": "^4.83.0"

@@ -1,0 +1,6 @@
+# Copy this file to .dev.vars for local development
+# Do not commit .dev.vars with real secrets.
+
+API_TOKEN=replace_with_local_api_token
+DEFAULT_SENDER=noreply@yourdomain.com
+DEFAULT_FROM_NAME=Cloudflare Email MCP
